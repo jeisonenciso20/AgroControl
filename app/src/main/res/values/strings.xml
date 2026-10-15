@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">AgroControl</string>
+    <string name="nav_inicio">Inicio</string>
+    <string name="nav_animales">Animales</string>
+    <string name="nav_produccion">Producción</string>
+    <string name="nav_potreros">Potreros</string>
+    <string name="nav_mas">Más</string>
+    <string name="login_title">AgroControl</string>
+    <string name="login_subtitle">Gestión de tu finca, aun sin internet</string>
+    <string name="action_ingresar">Ingresar</string>
+    <string name="action_crear_cuenta">Crear cuenta</string>
+    <string name="action_guardar_animal">Guardar animal</string>
+    <string name="action_sincronizar">Sincronizar ahora</string>
+    <string name="action_cerrar_sesion">Cerrar sesión</string>
+</resources>

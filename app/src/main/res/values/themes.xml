@@ -1,0 +1,15 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.AgroControl" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.AgroControl" parent="Base.Theme.AgroControl" />
+
+    <style name="Theme.AgroControl.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#2E6B30</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="postSplashScreenTheme">@style/Theme.AgroControl</item>
+    </style>
+</resources>

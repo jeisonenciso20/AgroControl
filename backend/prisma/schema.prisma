@@ -1,0 +1,178 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ProductType {
+  LECHE
+  CARNE
+  HUEVO
+  OTRO
+}
+
+enum JornadaOrdeno {
+  MANANA
+  TARDE
+}
+
+enum ReproEventType {
+  CELO
+  INSEMINACION
+  DIAGNOSTICO
+  PARTO
+}
+
+enum TaskType {
+  POTRERO
+  ANIMAL
+  GENERAL
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}
+
+enum SyncEntity {
+  ANIMAL
+  PRODUCTION_RECORD
+  PENDING_TASK
+  POTRERO
+  REPRODUCTION_EVENT
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  nombre       String
+  fincaId      String
+  finca        Finca    @relation(fields: [fincaId], references: [id], onDelete: Restrict)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Finca {
+  id                 String              @id @default(uuid())
+  nombre             String
+  users              User[]
+  animals            Animal[]
+  potreros           Potrero[]
+  productionRecords  ProductionRecord[]
+  reproductionEvents ReproductionEvent[]
+  pendingTasks       PendingTask[]
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+}
+
+model Animal {
+  id                 String              @id @default(uuid())
+  fincaId            String
+  finca              Finca               @relation(fields: [fincaId], references: [id], onDelete: Restrict)
+  codigo             String
+  nombre             String              @default("")
+  tipo               String
+  raza               String
+  sexo               String
+  peso               Float
+  fechaNacimiento    DateTime            @db.Date
+  potreroNombre      String              @default("")
+  observacion        String              @default("")
+  syncVersion        Int                 @default(1)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  productionRecords  ProductionRecord[]
+  reproductionEvents ReproductionEvent[]
+  potreroAssignments AnimalPotrero[]
+
+  @@unique([fincaId, codigo])
+  @@index([fincaId, updatedAt])
+}
+
+model Potrero {
+  id                   String    @id @default(uuid())
+  fincaId              String
+  finca                Finca     @relation(fields: [fincaId], references: [id], onDelete: Restrict)
+  nombre               String
+  areaHectareas        Float?
+  estado               String    @default("DISPONIBLE")
+  tipoPasto            String?
+  fechaUltimaSiembra   DateTime? @db.Date
+  fechaProximoUso      DateTime? @db.Date
+  observacion          String    @default("")
+  especiesPermitidas   Json      @default("[]")
+  syncVersion          Int       @default(1)
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+  assignments          AnimalPotrero[]
+
+  @@unique([fincaId, nombre])
+}
+
+model AnimalPotrero {
+  id        String   @id @default(uuid())
+  animalId  String
+  potreroId String
+  animal    Animal   @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  potrero   Potrero  @relation(fields: [potreroId], references: [id], onDelete: Cascade)
+  desde     DateTime @default(now())
+  hasta     DateTime?
+}
+
+model ProductionRecord {
+  id          String         @id @default(uuid())
+  fincaId     String
+  finca       Finca          @relation(fields: [fincaId], references: [id], onDelete: Restrict)
+  animalId    String?
+  animal      Animal?        @relation(fields: [animalId], references: [id], onDelete: SetNull)
+  productType ProductType
+  cantidad    Float
+  unidad      String
+  fecha       DateTime       @db.Date
+  jornada     JornadaOrdeno  @default(MANANA)
+  notas       String         @default("")
+  syncVersion Int            @default(1)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([fincaId, fecha])
+  @@unique([fincaId, animalId, fecha, jornada])
+}
+
+model ReproductionEvent {
+  id          String         @id @default(uuid())
+  fincaId     String
+  finca       Finca          @relation(fields: [fincaId], references: [id], onDelete: Restrict)
+  animalId    String
+  animal      Animal         @relation(fields: [animalId], references: [id], onDelete: Cascade)
+  tipoEvento  ReproEventType
+  programada  DateTime       @db.Date
+  realizada   DateTime?      @db.Date
+  notas       String         @default("")
+  datosJson   Json           @default("{}")
+  syncVersion Int            @default(1)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model PendingTask {
+  id          String     @id @default(uuid())
+  fincaId     String
+  finca       Finca      @relation(fields: [fincaId], references: [id], onDelete: Restrict)
+  titulo      String
+  tipo        TaskType
+  status      TaskStatus @default(PENDING)
+  vencimiento DateTime   @db.Date
+  referencia  String     @default("")
+  workType    String?
+  observacion String     @default("")
+  syncVersion Int        @default(1)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([fincaId, status, vencimiento])
+}

@@ -1,0 +1,2 @@
+-keep class com.jeison.agrocontrol.network.** { *; }
+-keep class com.jeison.agrocontrol.data.** { *; }

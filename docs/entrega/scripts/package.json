@@ -1,0 +1,9 @@
+{
+  "name": "agro-swagger-guide-scripts",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "docx": "^9.5.1",
+    "puppeteer": "^24.36.1"
+  }
+}
