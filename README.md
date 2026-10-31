@@ -40,6 +40,20 @@ npm run db:setup
 npm run start:dev
 ```
 
+### Base de datos en Neon (nube, sin Docker)
+
+`backend/neon.ts` declara la configuración del proyecto Neon y `neon deploy` inyecta
+`DATABASE_URL` (pooled) y `DATABASE_URL_UNPOOLED` (directa, para migraciones) en
+`backend/.env`. Prisma usa ambas vía `url` + `directUrl`.
+
+```bash
+cd backend
+neon login      # solo la primera vez
+neon deploy
+npm run db:setup
+npm run start:dev
+```
+
 - Swagger: http://localhost:3000/api/docs  
 - OpenAPI JSON (con API en marcha): http://localhost:3000/api/docs-json  
 - Usuario demo: `demo@agrocontrol.local` / `demo1234`

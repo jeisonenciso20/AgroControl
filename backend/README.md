@@ -16,6 +16,48 @@ npm run start:dev
 
 `db:setup` ejecuta en orden: `prisma generate` → `migrate deploy` (crea tablas) → `db seed` (datos demo). No ejecutes solo `db seed` sin migrar antes.
 
+### Base de datos en Neon (nube)
+
+La carpeta incluye `neon.ts` (política config-as-code) y está vinculada al proyecto Neon
+`plain-union-47753094`, rama `production`.
+
+```bash
+neon login          # una vez por máquina
+neon deploy         # aplica neon.ts y baja DATABASE_URL / DATABASE_URL_UNPOOLED a .env
+npm run db:setup    # generate + migrate deploy + seed
+npm run start:dev
+```
+
+- `DATABASE_URL` es la conexión **pooled** (`-pooler`) que usa la API en runtime.
+- `DATABASE_URL_UNPOOLED` es la conexión **directa** que Prisma Migrate usa vía
+  `directUrl` en `prisma/schema.prisma`; no la cambies a la pooled o las migraciones
+  pueden fallar con errores de prepared statements.
+- Para una rama de desarrollo aislada: `neon checkout dev --create` y luego
+  `neon deploy` dentro de esa rama.
+
+### Despliegue en Render
+
+El servicio debe tener **Root Directory = `backend`**.
+
+| Ajuste | Valor |
+|---|---|
+| Build Command | `npm install --include=dev && npm run render:build` |
+| Start Command | `npm run render:start` |
+
+`render:build` ejecuta `prisma generate` → `nest build` → `prisma migrate deploy`
+(usa `DATABASE_URL_UNPOOLED`). Variables de entorno requeridas en Render:
+
+```text
+DATABASE_URL=<pooled de Neon, con -pooler>
+DATABASE_URL_UNPOOLED=<directa de Neon, sin -pooler>
+JWT_ACCESS_SECRET=<secreto de 32+ caracteres>
+JWT_REFRESH_SECRET=<secreto de 32+ caracteres>
+CORS_ORIGIN=*
+```
+
+No uses `npx generate` (ese es otro paquete) ni `prisma ...` directo en el Build
+Command: fuera de un script npm, `node_modules/.bin` no está en el `PATH`.
+
 Swagger: http://localhost:3000/api/docs
 
 OpenAPI en archivo (con API en marcha): `npm run openapi:export` → `openapi/agrocontrol-openapi.json`. Colección Postman: [`collections/README.md`](collections/README.md).
