@@ -4,6 +4,11 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+// URL base de la API. Por defecto apunta al backend desplegado en Render.
+// Para usar un backend local: ./gradlew assembleDebug -PapiBaseUrl=http://10.0.2.2:3000/api/v1/
+val apiBaseUrl: String = (project.findProperty("apiBaseUrl") as String?)
+    ?: "https://agrocontrol-apjl.onrender.com/api/v1/"
+
 android {
     namespace = "com.jeison.agrocontrol"
     compileSdk {
@@ -18,6 +23,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "API_BASE_URL", "\"$apiBaseUrl\"")
     }
 
     buildTypes {
@@ -32,6 +39,7 @@ android {
         }
     }
     buildFeatures {
+        buildConfig = true
         compose = true
         viewBinding = false
     }

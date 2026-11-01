@@ -1,5 +1,6 @@
 package com.jeison.agrocontrol.network
 
+import com.jeison.agrocontrol.BuildConfig
 import com.jeison.agrocontrol.auth.TokenStore
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
@@ -14,15 +15,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-    const val BASE_URL = "http://10.0.2.2:3000/api/v1/"
+    /**
+     * Backend en producción (Render): https://agrocontrol-apjl.onrender.com/api/v1/
+     * Se define en app/build.gradle.kts como BuildConfig.API_BASE_URL.
+     */
+    val BASE_URL: String = BuildConfig.API_BASE_URL
+
+    // Render free duerme el servicio tras ~15 min sin tráfico: el primer
+    // request puede tardar 30-60 s en despertar.
+    private const val TIMEOUT_SECONDS = 60L
 
     private val refreshApi: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(
                 OkHttpClient.Builder()
-                    .connectTimeout(30, TimeUnit.SECONDS)
-                    .readTimeout(30, TimeUnit.SECONDS)
+                    .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
                     .build(),
             )
             .addConverterFactory(GsonConverterFactory.create())
@@ -80,8 +89,8 @@ object RetrofitClient {
             .addInterceptor(authInterceptor)
             .authenticator(authenticator)
             .addInterceptor(logging)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
+            .connectTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
+            .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
         return Retrofit.Builder()
             .baseUrl(BASE_URL)

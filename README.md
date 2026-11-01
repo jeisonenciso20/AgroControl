@@ -58,9 +58,28 @@ npm run start:dev
 - OpenAPI JSON (con API en marcha): http://localhost:3000/api/docs-json  
 - Usuario demo: `demo@agrocontrol.local` / `demo1234`
 
+### Producción (Render)
+
+| Recurso | URL |
+|---|---|
+| API | https://agrocontrol-apjl.onrender.com/api/v1/ |
+| Swagger | https://agrocontrol-apjl.onrender.com/api/docs |
+
+La app Android ya apunta ahí por defecto (`BuildConfig.API_BASE_URL`).
+
 ## Android
 
-Abrir `app/` en Android Studio, sincronizar Gradle, ejecutar en emulador (API → `10.0.2.2:3000`).
+Abrir `app/` en Android Studio, sincronizar Gradle y ejecutar. La app usa por
+defecto el backend en Render (`https://agrocontrol-apjl.onrender.com/api/v1/`).
+
+Para usar un backend local en el emulador:
+
+```bash
+./gradlew assembleDebug -PapiBaseUrl=http://10.0.2.2:3000/api/v1/
+```
+
+El primer request tras ~15 min de inactividad puede tardar hasta un minuto
+(Render free duerme el servicio); la app espera 60 s antes de fallar.
 
 Smoke test: [`docs/architecture/e2e-smoke.md`](docs/architecture/e2e-smoke.md).
 
