@@ -16,3 +16,5 @@ node build-swagger-guide.mjs
 ```
 
 Requisitos: `npm run start:dev` en `backend/` y semilla demo (`npm run db:setup`).
+
+Las capturas recortan el **opblock completo** de Swagger (request + response) con interacción real (Try it out / Execute) y se insertan en Word con **escala proporcional** (máx. 620×900 px lógicos), sin deformar el aspecto.
