@@ -4,10 +4,10 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.ui.graphics.Color
 
-val PrimaryLight = Color(0xFF2E6B30)
+val PrimaryLight = Color(0xFFB91C1C)
 val OnPrimaryLight = Color(0xFFFFFFFF)
-val PrimaryContainerLight = Color(0xFFB5F1AB)
-val OnPrimaryContainerLight = Color(0xFF002106)
+val PrimaryContainerLight = Color(0xFFFFDAD6)
+val OnPrimaryContainerLight = Color(0xFF410002)
 val SecondaryLight = Color(0xFF77592A)
 val OnSecondaryLight = Color(0xFFFFFFFF)
 val SecondaryContainerLight = Color(0xFFFFDDB2)
@@ -35,13 +35,13 @@ val SurfaceContainerHighLight = Color(0xFFE6E9E0)
 val SurfaceContainerHighestLight = Color(0xFFE1E4DA)
 val InverseSurfaceLight = Color(0xFF2F312C)
 val InverseOnSurfaceLight = Color(0xFFF0F1E9)
-val InversePrimaryLight = Color(0xFF9AD591)
+val InversePrimaryLight = Color(0xFFFFB4AB)
 val ScrimLight = Color(0xFF000000)
 
-val PrimaryDark = Color(0xFF9AD591)
-val OnPrimaryDark = Color(0xFF003910)
-val PrimaryContainerDark = Color(0xFF14521A)
-val OnPrimaryContainerDark = Color(0xFFB5F1AB)
+val PrimaryDark = Color(0xFFFFB4AB)
+val OnPrimaryDark = Color(0xFF690005)
+val PrimaryContainerDark = Color(0xFF93000A)
+val OnPrimaryContainerDark = Color(0xFFFFDAD6)
 val SecondaryDark = Color(0xFFE8C08A)
 val OnSecondaryDark = Color(0xFF432C00)
 val SecondaryContainerDark = Color(0xFF5D4214)
@@ -69,7 +69,7 @@ val SurfaceContainerHighDark = Color(0xFF282B26)
 val SurfaceContainerHighestDark = Color(0xFF333631)
 val InverseSurfaceDark = Color(0xFFE1E4DA)
 val InverseOnSurfaceDark = Color(0xFF2F312C)
-val InversePrimaryDark = Color(0xFF2E6B30)
+val InversePrimaryDark = Color(0xFFB91C1C)
 
 data class AgroExtendedColors(
     val success: Color,
