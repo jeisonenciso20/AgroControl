@@ -120,7 +120,7 @@ fun ProduccionRegistrarRoute(onBack: () -> Unit, onSaved: () -> Unit, vm: Produc
     val state by vm.state.collectAsStateWithLifecycle()
     LaunchedEffect(state.saved) { if (state.saved) { vm.clearSaved(); onSaved() } }
     val jornadas = listOf("MANANA" to "Mañana", "TARDE" to "Tarde")
-    val tipos = listOf("LECHE", "CARNE", "HUEVO", "OTRO")
+    val tipos = listOf("LECHE", "CARNE")
     AgroScaffold(title = "Registrar producción", onBack = onBack) { padding ->
         Column(Modifier.padding(padding).verticalScroll(rememberScrollState()).padding(AgroSpacing.md)) {
             val labels = state.animalOptions.map { it.first }

@@ -14,8 +14,6 @@ datasource db {
 enum ProductType {
   LECHE
   CARNE
-  HUEVO
-  OTRO
 }
 
 enum JornadaOrdeno {

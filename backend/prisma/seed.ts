@@ -156,7 +156,6 @@ async function main() {
     { id: 'seed-prod-2', type: ProductType.LECHE, cantidad: 58, unidad: 'L', days: 3, animalId: 'seed-animal-001' },
     { id: 'seed-prod-3', type: ProductType.LECHE, cantidad: 66, unidad: 'L', days: 5, animalId: 'seed-animal-024' },
     { id: 'seed-prod-4', type: ProductType.CARNE, cantidad: 120, unidad: 'kg', days: 7, animalId: null },
-    { id: 'seed-prod-5', type: ProductType.HUEVO, cantidad: 180, unidad: 'unidades', days: 14, animalId: null },
     { id: 'seed-prod-6', type: ProductType.LECHE, cantidad: 55, unidad: 'L', days: 21, animalId: 'seed-animal-002' },
   ] as const;
 

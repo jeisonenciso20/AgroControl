@@ -50,7 +50,7 @@ cinco pestañas.
 |---|---|
 | 🐮 **Animales** | Alta, edición, borrado y ficha por animal: código único por finca, nombre, tipo, raza, sexo, peso, fecha de nacimiento, potrero y observaciones. Búsqueda por código/nombre/tipo y pestaña de producción del animal |
 | 🌱 **Potreros** | Área en hectáreas, estado, tipo de pasto, fechas de siembra y próximo uso, observaciones y **especies permitidas**. Incluye historial de asignación animal↔potrero (rotación) |
-| 🥛 **Producción** | Registro de leche, carne, huevo u otro; cantidad, unidad, fecha y **jornada (mañana/tarde)** por animal. Historial y agregados para los KPIs |
+| 🥛 **Producción** | Registro de leche o carne; cantidad, unidad, fecha y **jornada (mañana/tarde)** por animal. Historial y agregados para los KPIs |
 | 🧬 **Reproducción** | Eventos de celo, inseminación, diagnóstico y parto, con fecha programada y realizada, notas y datos extra en JSON |
 | ✅ **Pendientes** | Tareas por potrero, animal o generales, con vencimiento, referencia y estado; se marcan como completadas desde el inicio o desde la lista |
 | 📊 **Inicio / Dashboard** | KPIs de animales, potreros, eventos y litros de la semana + tareas próximas a vencer |
@@ -293,7 +293,7 @@ Colección Postman: [`backend/collections/`](backend/collections/).
 | `Animal` | Código único por finca, raza, sexo, peso, potrero, `syncVersion` |
 | `Potrero` | Área, estado, pasto, especies permitidas |
 | `AnimalPotrero` | Historial de rotación (desde/hasta) entre animal y potrero |
-| `ProductionRecord` | Leche/carne/huevo/otro por animal, fecha y jornada |
+| `ProductionRecord` | Leche/carne por animal, fecha y jornada |
 | `ReproductionEvent` | Celo, inseminación, diagnóstico o parto |
 | `PendingTask` | Tarea con tipo, vencimiento y estado |
 
